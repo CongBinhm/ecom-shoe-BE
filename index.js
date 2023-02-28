@@ -7,12 +7,10 @@ const routers = require("./routers");
 const port = process.env.PORT || 4000;
 const database = process.env.DATABASE_URL;
 const app = express();
-const corsOptions = {
-  origin: process.env.corsOrigin,
-};
+
 const version = "/v1";
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(version, routers);
