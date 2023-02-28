@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(version, routers);
 
+mongoose.set("strictQuery", false); // hide notify in console
 mongoose
   .connect(database)
   .then((result) => {

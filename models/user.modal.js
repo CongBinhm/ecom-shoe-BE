@@ -2,7 +2,10 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const secretKey = process.env.JWT_KEY;
+const expiresTime = process.env.expiresTime;
 
 const UserSchema = new mongoose.Schema(
   {
@@ -67,9 +70,11 @@ const UserSchema = new mongoose.Schema(
   },
   { collection: "user" }
 );
-UserSchema.method.createAccessToken = async function () {
+UserSchema.methods.createAccessToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id }, secretKey);
+  const token = jwt.sign({ userId: user._id }, secretKey, {
+    expiresIn: expiresTime,
+  });
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
