@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const validator = require("validator");
 
 const productSchema = new Schema(
   {
-    title: {
+    name: {
       type: String,
-      required: true,
+      required: [true, "Name can't be empty"],
     },
     price: {
       type: Number,
@@ -18,11 +19,16 @@ const productSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "Description can't be empty"],
     },
-    imageUrl: {
+    product_img: {
       type: String,
-      required: true,
+      validate: {
+        validator: (value) => {
+          return validator.isBase64(value);
+        },
+        message: `Product image must be base64`,
+      },
     },
     rating: {
       type: Number,
