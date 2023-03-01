@@ -11,7 +11,7 @@ const updateProduct = async (req, res) => {
       _id: productId,
       userId: userId,
     });
-    await Product.findOneAndUpdate(
+    const updateProduct = await Product.findOneAndUpdate(
       { _id: productId, userId: userId },
       {
         name: Boolean(name) ? name : oldProduct.name,
@@ -24,16 +24,12 @@ const updateProduct = async (req, res) => {
           : oldProduct.original_price,
         stock: Boolean(stock) ? stock : oldProduct.stock,
         rating: Boolean(rating) ? rating : oldProduct.rating,
-      }
+      },
+      { new: true }
     );
     res.status(200).json({
       message: "Update product success",
-      data: formatProductDataResponse(
-        await Product.findOne({
-          _id: productId,
-          userId: userId,
-        })
-      ),
+      data: formatProductDataResponse(updateProduct),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
