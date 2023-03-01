@@ -105,20 +105,25 @@ UserSchema.methods.addToCart = async function(product){
   });
   let newQuantity = 1;
   const updatedCartItems = [...this.cart.products];
+  let Total = 0;
 
   if(cartProductIndex >= 0){
     newQuantity = this.cart.products[cartProductIndex].quantity + 1;
     updatedCartItems[cartProductIndex].quantity = newQuantity;
+
+    Total = Total + this.cart.subtotal;
   } else {
+    Total = this.cart.subtotal,
     updatedCartItems.push({
       product: product,
-      quantity: newQuantity
+      quantity: newQuantity,
     });
   }
 
-  const updateCart = {
-    products: updatedCartItems
+  const updatedCart = {
+    products: updatedCartItems,
   };
   this.cart.products = updatedCart;
+  this.cart.grand_total = Total;
   return this.save();
 }
