@@ -6,7 +6,7 @@ const productSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name can't be empty"],
     },
     price: {
       type: Number,
@@ -19,7 +19,7 @@ const productSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "Description can't be empty"],
     },
     product_img: {
       type: String,
