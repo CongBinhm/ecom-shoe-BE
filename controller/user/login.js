@@ -1,4 +1,4 @@
-const User = require("../../models/user.modal");
+const User = require("../../models/user.model");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
