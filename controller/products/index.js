@@ -1,4 +1,4 @@
 const addProduct = require("./addProduct");
 const updateProduct = require("./updateProduct");
-
-module.exports = { addProduct, updateProduct };
+const deleteProduct = require("./deleteProduct");
+module.exports = { addProduct, updateProduct, deleteProduct };
