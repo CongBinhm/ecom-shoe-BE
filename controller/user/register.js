@@ -1,4 +1,4 @@
-const User = require("../../models/user.modal");
+const User = require("../../models/user.model");
 
 const register = async (req, res) => {
   try {
