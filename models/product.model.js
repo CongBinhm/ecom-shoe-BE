@@ -4,7 +4,7 @@ const validator = require("validator");
 
 const productSchema = new Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
     },
