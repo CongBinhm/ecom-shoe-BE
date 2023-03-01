@@ -12,7 +12,7 @@ const updateProduct = async (req, res) => {
       userId: userId,
     });
     if (oldProduct === null)
-      return res.status(404).json({ message: "Can't find product" });
+      return res.status(400).json({ message: "Can't find product" });
     const updateProduct = await Product.findOneAndUpdate(
       { _id: productId, userId: userId },
       {
