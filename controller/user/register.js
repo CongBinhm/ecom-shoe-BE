@@ -1,5 +1,5 @@
 require("dotenv").config();
-const User = require("../../models/user.modal");
+const User = require("../../models/user.model");
 const adminRegisterKey = process.env.adminKey;
 
 const register = async (req, res) => {
