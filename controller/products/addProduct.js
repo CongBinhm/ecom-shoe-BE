@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Product = require("../../models/product.model");
+const formatProductDataResponse = require("../../services/formatProductDataResponse");
 
 const addProduct = async (req, res) => {
   try {
@@ -18,16 +19,7 @@ const addProduct = async (req, res) => {
     await newProduct.save();
     return res.status(200).json({
       message: "Add product success",
-      data: {
-        name: newProduct.name,
-        description: newProduct.description,
-        price: newProduct.price,
-        original_price: newProduct.original_price,
-        rating: newProduct.rating,
-        stock: newProduct.stock,
-        id: newProduct._id,
-        userID: newProduct.userId,
-      },
+      data: formatProductDataResponse(newProduct),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
