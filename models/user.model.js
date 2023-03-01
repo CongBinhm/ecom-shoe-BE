@@ -97,4 +97,43 @@ UserSchema.pre("save", async function (next) {
     user.password = await bcrypt.hash(user.password, 10);
   next();
 });
+
+UserSchema.methods.addToCart = function(product){
+  const cartProductIndex = this.cart.products.findIndex(prod => {
+    return prod.product._id.toString() === product._id.toString();
+  });
+  let newQuantity = 1;
+  const updatedCartItems = [...this.cart.products];
+  let Total = 0;
+
+  if(cartProductIndex >= 0){
+    newQuantity = this.cart.products[cartProductIndex].quantity + 1;
+    updatedCartItems[cartProductIndex].quantity = newQuantity;
+
+    Total = Total + this.cart.subtotal;
+  } else {
+    Total = this.cart.subtotal,
+    updatedCartItems.push({
+      product: product,
+      quantity: newQuantity
+    });
+  }
+
+  const updatedCart = {
+    products: updatedCartItems
+  };
+
+  this.cart.products = updatedCart;
+  this.cart.grand_total = Total;
+  return this.save();
+}
+
+UserSchema.methods.removeFromCart = function(prodId)  {
+  const updatedCartItems = this.cart.products.filter(item =>{
+    return item.product._id.toString() !== prodId.toString();
+  });
+  this.cart.products = updatedCartItems;
+  return this.save();
+}
+
 module.exports = mongoose.model("User", UserSchema);
