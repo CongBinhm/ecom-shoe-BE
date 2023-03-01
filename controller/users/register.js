@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const formatUserDataResponse = require("../../services/formatUserDataResponse");
 require("dotenv").config();
 const adminRegisterKey = process.env.adminRegisterKey;
 
@@ -23,7 +24,12 @@ const register = async (req, res) => {
       },
     });
     await user.save();
-    res.status(201).json({ message: "Create user success" });
+    res
+      .status(201)
+      .json({
+        message: "Create user success",
+        data: formatUserDataResponse(user),
+      });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
