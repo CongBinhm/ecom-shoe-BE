@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const validator = require("validator");
 
 const productSchema = new Schema(
   {
@@ -20,9 +21,14 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    imageUrl: {
+    product_img: {
       type: String,
-      required: true,
+      validate: {
+        validator: (value) => {
+          return validator.isBase64(value);
+        },
+        message: `Product image must be base64`,
+      },
     },
     rating: {
       type: Number,
