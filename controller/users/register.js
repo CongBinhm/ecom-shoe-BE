@@ -16,6 +16,11 @@ const register = async (req, res) => {
       phone_number,
       password: password,
       role: adminKey === adminRegisterKey ? "admin" : "user",
+      cart: {
+        grand_total: 0,
+        subtotal: 0,
+        discount_amount: 0,
+      },
     });
     await user.save();
     res.status(201).json({ message: "Create user success" });
