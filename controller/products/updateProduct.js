@@ -5,8 +5,7 @@ const updateProduct = async (req, res) => {
   try {
     const userId = req.user._id;
     const productId = req.params.id;
-    const { name, description, price, original_price, stock, rating } =
-      req.body;
+    const { name, description, rating } = req.body;
     const oldProduct = await Product.findOne({
       _id: productId,
       userId: userId,
@@ -20,11 +19,6 @@ const updateProduct = async (req, res) => {
         description: Boolean(description)
           ? description
           : oldProduct.description,
-        price: Boolean(price) ? price : oldProduct.price,
-        original_price: Boolean(original_price)
-          ? original_price
-          : oldProduct.original_price,
-        stock: Boolean(stock) ? stock : oldProduct.stock,
         rating: Boolean(rating) ? rating : oldProduct.rating,
       },
       { new: true }

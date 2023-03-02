@@ -8,12 +8,12 @@ const productSchema = new Schema(
       type: String,
       required: [true, "Name can't be empty"],
     },
-    price: {
+    min_price: {
       type: Number,
       required: true,
       min: 0,
     },
-    original_price: {
+    max_price: {
       type: Number,
       required: true,
       min: 0,

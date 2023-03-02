@@ -13,7 +13,8 @@ const {
   addProduct,
   updateProduct,
   deleteProduct,
-  addSizeProduct,
+  addProductSize,
+  updateProductSize,
 } = require("../controller/products");
 const { userAuth, adminAuth } = require("../middleware");
 
@@ -28,6 +29,12 @@ usersRouter.get("/current/product", userAuth, adminAuth, getUserProduct);
 usersRouter.post("/current/product", userAuth, adminAuth, addProduct);
 usersRouter.put("/current/product/:id", userAuth, adminAuth, updateProduct);
 usersRouter.delete("/current/product/:id", userAuth, adminAuth, deleteProduct);
-usersRouter.post("/current/product/size", userAuth, adminAuth, addSizeProduct);
+usersRouter.post("/current/product/size", userAuth, adminAuth, addProductSize);
+usersRouter.put(
+  "/current/product/size/:sizeId",
+  userAuth,
+  adminAuth,
+  updateProductSize
+);
 
 module.exports = usersRouter;
