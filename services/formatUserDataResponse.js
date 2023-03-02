@@ -6,7 +6,7 @@ const formatUserDataResponse = (userData) => {
     first_name: userData.first_name,
     last_name: userData.last_name,
     phone_number: userData.phone_number,
-    avatar_img: userData.avatar_img,
+    avatar_img: userData.avatar_img || null,
   };
 };
 
