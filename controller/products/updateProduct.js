@@ -25,7 +25,7 @@ const updateProduct = async (req, res) => {
     );
     res.status(200).json({
       message: "Update product success",
-      data: formatProductDataResponse(updateProduct),
+      data: formatProductDataResponse(updateProduct, 0),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

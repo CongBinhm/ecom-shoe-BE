@@ -10,7 +10,6 @@ const addProduct = async (req, res) => {
     const productData = req.body;
     const { name, description } = productData;
     const size = removeDuplicateSize(productData.size);
-    console.log(size);
     const [min_price, max_price, stock] = getLimitPrice(size);
     const newProduct = new Product({
       name: name,

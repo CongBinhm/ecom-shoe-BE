@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
 const formatProductDataResponse = require("../../services/formatProductDataResponse");
+const getLimitPrice = require("../../services/getLimitPrice");
 
 const addSizeProduct = async (req, res) => {
   try {
@@ -24,6 +25,12 @@ const addSizeProduct = async (req, res) => {
       stock,
       product_img,
     });
+    const [min_price, max_price, total_stock] = getLimitPrice(
+      updateProduct.size
+    );
+    updateProduct.min_price = min_price;
+    updateProduct.max_price = max_price;
+    updateProduct.stock = total_stock;
     await updateProduct.save();
     res.status(200).json({
       message: "Add product size success",

@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
             required: true,
             ref: "Product",
           },
-          price_id: { type: Schema.Types.ObjectId, required: true },
+          size_id: { type: Schema.Types.ObjectId, required: true },
           quantity: { type: Number, required: true },
           selected: { type: Boolean, required: true },
         },
@@ -103,4 +103,5 @@ UserSchema.pre("save", async function (next) {
     user.password = await bcrypt.hash(user.password, 10);
   next();
 });
+
 module.exports = mongoose.model("User", UserSchema);

@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
 const formatProductDataResponse = require("../../services/formatProductDataResponse");
+const getLimitPrice = require("../../services/getLimitPrice");
 
 const updateProductSize = async (req, res) => {
   try {
@@ -21,7 +22,6 @@ const updateProductSize = async (req, res) => {
         .json({ message: "Can't found this size in product" });
 
     const oldData = updateProduct.size[indexUpdate];
-    console.log({ _id: oldData._id, oldData });
     updateProduct.size[indexUpdate] = {
       _id: oldData._id,
       stock: stock || oldData.stock,
@@ -30,6 +30,12 @@ const updateProductSize = async (req, res) => {
       name: name || oldData.name,
       product_img: product_img || oldData.product_img,
     };
+    const [min_price, max_price, total_stock] = getLimitPrice(
+      updateProduct.size
+    );
+    updateProduct.min_price = min_price;
+    updateProduct.max_price = max_price;
+    updateProduct.stock = total_stock;
     await updateProduct.save();
     res.status(200).json({
       message: "Update size success",
