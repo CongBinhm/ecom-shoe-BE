@@ -15,6 +15,7 @@ const productSchema = new Schema(
     },
     original_price: {
       type: Number,
+      required: true,
       min: 0,
     },
     description: {
@@ -34,7 +35,7 @@ const productSchema = new Schema(
       {
         name: { type: String, required: true },
         price: { type: Number, required: true },
-        original_price: { type: Number },
+        original_price: { type: Number, required: true },
       },
     ],
     rating: {

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -25,7 +26,12 @@ const UserSchema = new mongoose.Schema(
       discount_amount: { type: Number, required: true },
       products: [
         {
-          product: { type: Object, required: true },
+          product: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "Product",
+          },
+          price_id: { type: Schema.Types.ObjectId, required: true },
           quantity: { type: Number, required: true },
           selected: { type: Boolean, required: true },
         },

@@ -27,7 +27,7 @@ const register = async (req, res) => {
       role: admin_key === adminRegisterKey ? "admin" : "user",
       cart: {
         grand_total: 0,
-        subtotal: 0,
+        items_total: 0,
         discount_amount: 0,
       },
     });

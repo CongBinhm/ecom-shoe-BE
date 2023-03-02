@@ -1,7 +1,7 @@
 const formatUserDataResponse = require("./formatUserDataResponse");
 
-const formatProductDataResponse = (productData) => {
-  return {
+const formatProductDataResponse = (productData, needUser = 1) => {
+  let data = {
     name: productData.name,
     description: productData.description,
     price: productData.price,
@@ -9,8 +9,9 @@ const formatProductDataResponse = (productData) => {
     rating: productData.rating,
     stock: productData.stock,
     id: productData._id,
-    user: formatUserDataResponse(productData.userId),
   };
+  if (needUser) data.user = formatUserDataResponse(productData.userId);
+  return data;
 };
 
 module.exports = formatProductDataResponse;

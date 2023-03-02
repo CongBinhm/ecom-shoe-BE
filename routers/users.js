@@ -7,6 +7,7 @@ const {
   logout,
   logoutAll,
   updateUser,
+  getUserProduct,
 } = require("../controller/users");
 const {
   addProduct,
@@ -22,6 +23,7 @@ usersRouter.put("/current", userAuth, updateUser);
 usersRouter.delete("/current/logout", userAuth, logout);
 usersRouter.delete("/current/logoutAll", userAuth, logoutAll);
 
+usersRouter.get("/current/product", userAuth, adminAuth, getUserProduct);
 usersRouter.post("/current/product", userAuth, adminAuth, addProduct);
 usersRouter.put("/current/product/:id", userAuth, adminAuth, updateProduct);
 usersRouter.delete("/current/product/:id", userAuth, adminAuth, deleteProduct);
