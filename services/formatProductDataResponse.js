@@ -1,3 +1,5 @@
+const formatUserDataResponse = require("./formatUserDataResponse");
+
 const formatProductDataResponse = (productData) => {
   return {
     name: productData.name,
@@ -7,7 +9,7 @@ const formatProductDataResponse = (productData) => {
     rating: productData.rating,
     stock: productData.stock,
     id: productData._id,
-    userID: productData.userId,
+    user: formatUserDataResponse(productData.userId),
   };
 };
 
