@@ -11,6 +11,7 @@ const getProducts = async (req, res) => {
       !Boolean(req.query.page) || req.query.page < 1 ? 1 : req.query.page;
     const total_items = await Product.count();
     const productList = await Product.find()
+      .populate("userId")
       .skip(per_page * (page - 1))
       .limit(per_page);
     res.status(200).json({
