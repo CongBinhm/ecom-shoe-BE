@@ -1,5 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -20,9 +21,17 @@ const UserSchema = new mongoose.Schema(
       },
     },
     cart: {
+      grand_total: { type: Number, required: true },
+      items_total: { type: Number, required: true },
+      discount_amount: { type: Number, required: true },
       products: [
         {
-          product: { type: Object, required: true },
+          product: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: "Product",
+          },
+          size_id: { type: Schema.Types.ObjectId, required: true },
           quantity: { type: Number, required: true },
           selected: { type: Boolean, required: true },
         },
@@ -94,4 +103,5 @@ UserSchema.pre("save", async function (next) {
     user.password = await bcrypt.hash(user.password, 10);
   next();
 });
+
 module.exports = mongoose.model("User", UserSchema);
