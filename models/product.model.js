@@ -33,7 +33,7 @@ const productSchema = new Schema(
     },
     size: [
       new Schema({
-        name: { type: String, required: true, unique: true },
+        name: { type: String, required: true },
         price: { type: Number, required: true, min: 0 },
         original_price: { type: Number, required: true, min: 0 },
         stock: { type: Number, required: true, min: 0 },
