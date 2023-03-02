@@ -5,8 +5,15 @@ const adminRegisterKey = process.env.adminRegisterKey;
 
 const register = async (req, res) => {
   try {
-    const { email, first_name, last_name, phone_number, password, adminKey } =
-      req.body;
+    const {
+      email,
+      first_name,
+      last_name,
+      phone_number,
+      password,
+      adminKey,
+      avatar_img,
+    } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
@@ -16,6 +23,7 @@ const register = async (req, res) => {
       last_name,
       phone_number,
       password: password,
+      avatar_img,
       role: adminKey === adminRegisterKey ? "admin" : "user",
       cart: {
         grand_total: 0,
@@ -24,12 +32,10 @@ const register = async (req, res) => {
       },
     });
     await user.save();
-    res
-      .status(201)
-      .json({
-        message: "Create user success",
-        data: formatUserDataResponse(user),
-      });
+    res.status(201).json({
+      message: "Create user success",
+      data: formatUserDataResponse(user),
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
