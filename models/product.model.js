@@ -73,6 +73,7 @@ productSchema.pre("save", async function (next) {
   this.min_price = min_price;
   this.max_price = max_price;
   this.stock = stock;
+  console.log(min_price, max_price, stock);
   next();
 });
 

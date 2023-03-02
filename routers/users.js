@@ -15,6 +15,7 @@ const {
   deleteProduct,
   addProductSize,
   updateProductSize,
+  deleteProductSize,
 } = require("../controller/products");
 const { userAuth, adminAuth } = require("../middleware");
 
@@ -35,6 +36,12 @@ usersRouter.put(
   userAuth,
   adminAuth,
   updateProductSize
+);
+usersRouter.delete(
+  "/current/product/size/:sizeId",
+  userAuth,
+  adminAuth,
+  deleteProductSize
 );
 
 module.exports = usersRouter;
