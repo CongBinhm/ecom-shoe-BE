@@ -11,7 +11,7 @@ const register = async (req, res) => {
       last_name,
       phone_number,
       password,
-      adminKey,
+      admin_key,
       avatar_img,
     } = req.body;
     const existingUser = await User.findOne({ email });
@@ -24,7 +24,7 @@ const register = async (req, res) => {
       phone_number,
       password: password,
       avatar_img,
-      role: adminKey === adminRegisterKey ? "admin" : "user",
+      role: admin_key === adminRegisterKey ? "admin" : "user",
       cart: {
         grand_total: 0,
         subtotal: 0,

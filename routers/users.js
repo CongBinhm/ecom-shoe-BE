@@ -18,7 +18,7 @@ const { userAuth, adminAuth } = require("../middleware");
 usersRouter.get("/current", userAuth, getUser);
 usersRouter.post("/current", register);
 usersRouter.post("/current/login", login);
-usersRouter.put("/current", updateUser);
+usersRouter.put("/current", userAuth, updateUser);
 usersRouter.delete("/current/logout", userAuth, logout);
 usersRouter.delete("/current/logoutAll", userAuth, logoutAll);
 
