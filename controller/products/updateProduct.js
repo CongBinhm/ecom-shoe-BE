@@ -1,11 +1,12 @@
 const Product = require("../../models/product.model");
 const formatProductDataResponse = require("../../services/formatProductDataResponse");
+const removeDuplicateSize = require("../../services/removeDuplicateSize");
 
 const updateProduct = async (req, res) => {
   try {
     const userId = req.user._id;
     const productId = req.params.id;
-    const { name, description, rating } = req.body;
+    const { name, description, rating, size } = req.body;
     const oldProduct = await Product.findOne({
       _id: productId,
       userId: userId,
@@ -23,6 +24,10 @@ const updateProduct = async (req, res) => {
       },
       { new: true }
     );
+    if (Boolean(size)) {
+      updateProduct.size = removeDuplicateSize(size);
+      await updateProduct.save();
+    }
     res.status(200).json({
       message: "Update product success",
       data: formatProductDataResponse(updateProduct, 0),
