@@ -37,6 +37,15 @@ const productSchema = new Schema(
         price: { type: Number, required: true },
         original_price: { type: Number, required: true },
         stock: { type: Number, required: true },
+        product_img: {
+          type: String,
+          validate: {
+            validator: (value) => {
+              return validator.isBase64(value);
+            },
+            message: `Product image must be base64`,
+          },
+        },
       },
     ],
     rating: {
