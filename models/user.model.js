@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema(
       },
     },
     cart: {
+      grand_total: { type: Number, required: true },
+      items_total: { type: Number, required: true },
+      discount_amount: { type: Number, required: true },
       products: [
         {
           product: { type: Object, required: true },

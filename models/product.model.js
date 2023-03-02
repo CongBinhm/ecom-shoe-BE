@@ -30,6 +30,13 @@ const productSchema = new Schema(
         message: `Product image must be base64`,
       },
     },
+    size: [
+      {
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        original_price: { type: Number },
+      },
+    ],
     rating: {
       type: Number,
       required: true,
