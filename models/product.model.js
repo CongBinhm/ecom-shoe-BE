@@ -32,11 +32,11 @@ const productSchema = new Schema(
       },
     },
     size: [
-      {
-        name: { type: String, required: true },
-        price: { type: Number, required: true },
-        original_price: { type: Number, required: true },
-        stock: { type: Number, required: true },
+      new Schema({
+        name: { type: String, required: true, unique: true },
+        price: { type: Number, required: true, min: 0 },
+        original_price: { type: Number, required: true, min: 0 },
+        stock: { type: Number, required: true, min: 0 },
         product_img: {
           type: String,
           validate: {
@@ -46,7 +46,7 @@ const productSchema = new Schema(
             message: `Product image must be base64`,
           },
         },
-      },
+      }),
     ],
     rating: {
       type: Number,

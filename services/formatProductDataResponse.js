@@ -1,3 +1,4 @@
+const formatSizeProductDataResponse = require("./formatSizeProductDataResponse");
 const formatUserDataResponse = require("./formatUserDataResponse");
 
 const formatProductDataResponse = (productData, needUser = 1) => {
@@ -9,7 +10,7 @@ const formatProductDataResponse = (productData, needUser = 1) => {
     rating: productData.rating,
     stock: productData.stock,
     id: productData._id,
-    size: productData.size,
+    size: formatSizeProductDataResponse(productData.size),
   };
   if (needUser) data.user = formatUserDataResponse(productData.userId);
   return data;
