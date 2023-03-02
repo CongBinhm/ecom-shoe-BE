@@ -1,4 +1,5 @@
 const formatUserDataResponse = require("../../services/formatUserDataResponse");
+
 const getUser = async (req, res) => {
   try {
     res.json({ data: formatUserDataResponse(req.user) });

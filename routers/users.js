@@ -6,6 +6,7 @@ const {
   getUser,
   logout,
   logoutAll,
+  updateUser,
 } = require("../controller/users");
 const {
   addProduct,
@@ -14,11 +15,12 @@ const {
 } = require("../controller/products");
 const { userAuth, adminAuth } = require("../middleware");
 
+usersRouter.get("/current", userAuth, getUser);
 usersRouter.post("/current", register);
 usersRouter.post("/current/login", login);
+usersRouter.put("/current", userAuth, updateUser);
 usersRouter.delete("/current/logout", userAuth, logout);
 usersRouter.delete("/current/logoutAll", userAuth, logoutAll);
-usersRouter.get("/current", userAuth, getUser);
 
 usersRouter.post("/current/product", userAuth, adminAuth, addProduct);
 usersRouter.put("/current/product/:id", userAuth, adminAuth, updateProduct);
