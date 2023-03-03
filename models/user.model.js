@@ -104,4 +104,39 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
+UserSchema.methods.addToCart = function(product, size) {
+  const cartProductIndex = this.cart.products.findIndex(prodId => {
+    return prodId.product.toString() === product._id.toString() && prodId.size_id.toString() === size._id.toString();
+  });
+
+  let newQuantity = 1;
+  const updatedCartItems = [...this.cart];
+  const newProduct = [...this.cart.products]
+  let Newsubtotal = product.price;
+  newTotal += Newsubtotal;
+
+  if(cartProductIndex >= 0) {
+    newQuantity = this.cart[cartProductIndex].products.quantity + 1;
+    updatedCartItems[cartProductIndex].products.quantity = newQuantity;
+    
+    newTotal = this.cart[cartProductIndex].subTotal + newTotal;
+    updatedCartItems[cartProductIndex].grand_total = newTotal;
+  } else {
+    newProduct.push({
+      product: product._id,
+      quantity: newQuantity,
+      selected: true,
+      size_id: size._id
+    });
+    updatedCartItems.push({
+      grand_total: newTotal,
+      subTotal: Newsubtotal,
+      discount_amount: 0.0,
+      products: newProduct,
+    });
+  }
+  this.cart = updatedCartItems;
+  return this.save;
+}
+
 module.exports = mongoose.model("User", UserSchema);
