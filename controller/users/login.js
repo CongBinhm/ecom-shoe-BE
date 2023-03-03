@@ -2,8 +2,6 @@ const User = require("../../models/user.model");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
-
-
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
