@@ -68,12 +68,25 @@ const productSchema = new Schema(
   },
   { collection: "product" }
 );
-productSchema.pre("save", async function (next) {
-  const [min_price, max_price, stock] = getLimitPrice(this.size);
-  this.min_price = min_price;
-  this.max_price = max_price;
-  this.stock = stock;
-  next();
-});
 
+productSchema.post("findOneAndUpdate", async function (doc) {
+  const update = this.getUpdate();
+  if (
+    (update.$pull && update.$pull.size) ||
+    (update.$push && update.$push.size) ||
+    (update.$set &&
+      (update.$set.size ||
+        update.$set["size.$.price"] ||
+        update.$set["size.$.stock"] ||
+        update.$set["size.$.name"] ||
+        update.$set["size.$.original_price"] ||
+        update.$set["size.$.product_img"]))
+  ) {
+    const [min_price, max_price, stock] = getLimitPrice(doc.size);
+    doc.min_price = min_price;
+    doc.max_price = max_price;
+    doc.stock = stock;
+    await doc.save();
+  }
+});
 module.exports = mongoose.model("Product", productSchema);
