@@ -1,6 +1,7 @@
 require("dotenv").config();
 const Product = require("../../models/product.model");
 const formatProductDataResponse = require("../../services/formatProductDataResponse");
+const getLimitPrice = require("../../services/getLimitPrice");
 const removeDuplicateSize = require("../../services/removeDuplicateSize");
 
 const addProduct = async (req, res) => {
@@ -9,13 +10,14 @@ const addProduct = async (req, res) => {
     const productData = req.body;
     const { name, description } = productData;
     const size = removeDuplicateSize(productData.size);
+    const [min_price, max_price, stock] = getLimitPrice(size);
     const newProduct = new Product({
       name: name,
       description: description,
       rating: 0,
-      stock: 0,
-      max_price: 0,
-      min_price: 0,
+      stock,
+      max_price,
+      min_price,
       size,
       userId: userId,
     });
