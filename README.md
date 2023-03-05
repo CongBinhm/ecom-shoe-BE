@@ -106,7 +106,7 @@ Server run on http://localhost:4000
   - Get user cart:
     - note: require beaer token in header
     - request:
-      - method: Get
+      - method: GET
       - url: `/v1/cart`
     - response: {
       "data": {
@@ -150,3 +150,68 @@ Server run on http://localhost:4000
       }]
       }
       }
+  - Update cart item:
+    - note: require beaer token in header
+    - request:
+      - method: PUT
+      - url: `/v1/cart/:itemId`
+      - body: {
+        "quantity": Number,
+        "selected": Boolean
+        }
+    - response: {
+      "data": {
+      "id": String,
+      "grand_total": Number,
+      "items_total": Number,
+      "discount_amount": Number,
+      "products": [{
+      product: {},
+      size_id: String,
+      quantity: Number,
+      selected: Boolean,
+      size: {},
+      id: String
+      }]
+      }
+      }
+  - Delete cart item:
+    - note: require beaer token in header
+    - request:
+      - method: DELETE
+      - url: `/v1/cart/:itemId`
+    - response: {message: "Delete item success"}
+  - Checkout:
+    - note: require beaer token in header
+    - request:
+      - method: POST
+      - url: `/v1/cart/checkout`
+      - body: {
+        "payment_method": "cash"
+        }
+    - response: {
+      "message": "Payment success",
+      "data": {
+      "grand_total": Number,
+      "items_total": Number,
+      "discount_amount": Number,
+      "payment_method": String,
+      "products": [
+      ]
+      "userId" :String
+      "id" : String}}
+- Get user order history:
+  - note: require beaer token in header
+  - request:
+    - method: POST
+    - url: `/v1/users/current/orders`
+    - params: {
+      per_page: Number
+      page: Number
+      }
+  - response: {data: {
+    items:[]
+    "total_items": Number,
+    "current_page": Number,
+    "per_page": Number,
+    "total_pages": Number}}
