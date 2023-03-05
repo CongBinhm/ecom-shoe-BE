@@ -3,8 +3,8 @@
 ### Add package
 ### `npm install`
 or
-### `yarn add bcrypt cors dayjs dotenv express express-validator jsonwebtoken mongodb mongoose nodemon validator`
-In the project directory, you can run:
+### `yarn add`
+### Run project
 ### `npm start`
 or 
 ### `yarn start`
