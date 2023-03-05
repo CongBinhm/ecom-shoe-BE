@@ -1,6 +1,5 @@
 const formatCartDataResponse = require("../../services/formatCartDataResponse");
 const Cart = require("../../models/cart.model");
-
 const updateCartItem = async (req, res, next) => {
   try {
     const { quantity, selected } = req.body;

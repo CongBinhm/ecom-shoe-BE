@@ -1,7 +1,6 @@
 require("dotenv").config();
 const Cart = require("../../models/cart.model");
 const formatCartDataResponse = require("../../services/formatCartDataResponse");
-
 const GetCart = async (req, res, next) => {
   try {
     const cart = await Cart.findOne({ _id: req.user.cart }).populate(
