@@ -4,15 +4,15 @@ const CartRouter = express.Router();
 const {
   addCart,
   getCart,
-  DeleteCartItem,
-  updateCart,
+  deleteCartItem,
+  updateCartItem,
 } = require("../controller/carts");
 
 const { userAuth } = require("../middleware");
 
 CartRouter.get("/", userAuth, getCart);
 CartRouter.post("/", userAuth, addCart);
-CartRouter.delete("/", userAuth, DeleteCartItem);
-CartRouter.put("/:cartId", userAuth, updateCart);
+CartRouter.delete("/:itemId", userAuth, deleteCartItem);
+CartRouter.put("/:itemId", userAuth, updateCartItem);
 
 module.exports = CartRouter;
