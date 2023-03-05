@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const getUpdateCartQuantity = require("../services/getUpdateCartQuantity");
+const getGrand_Total = require("../services/getGrand_total");
 
 const secretKey = process.env.JWT_KEY;
 const expiresTime = process.env.expiresTime;
@@ -130,7 +132,7 @@ UserSchema.methods.addToCart = function(product, size) {
     });
     updatedCartItems.push({
       grand_total: newTotal,
-      subTotal: Newsubtotal,
+      items_total: Newsubtotal,
       discount_amount: 0.0,
       products: newProduct,
     });
@@ -146,5 +148,21 @@ UserSchema.methods.removeFromCart = async function(productId, sizeId){
   this.cart = updatedCart;
   await this.save();
 }
+
+UserSchema.post("findOneAndUpdate", async function(doc){
+  const update = this.getUpdate();
+  if(
+    (update.$pull && update.$pull.cart) ||
+    (update.$push && update.$push.cart) ||
+    (update.$set &&
+      update.$set.cart || update.$set["cart.$.products.quantity"])
+  ) {
+    const [newQuantity] = getUpdateCartQuantity(doc.cart.products);
+    doc.cart.products.quantity = newQuantity;
+    const total = getGrand_Total(doc.cart);
+    doc.cart.grand_total = total;
+    await doc.save();
+  }
+})
 
 module.exports = mongoose.model("User", UserSchema);
