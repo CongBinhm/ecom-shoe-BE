@@ -19,7 +19,7 @@ Server run on http://localhost:4000
   - Get products list:
     - request:
       - method: GET
-      - url: "v1/products"
+      - url: `v1/products`
     - response:
       - success: {
         - data: {
@@ -35,9 +35,10 @@ Server run on http://localhost:4000
           }
           }
   - Get product:
+    - note: id is id of product
     - request:
       - method: GET
-      - url: "v1/product/:id"
+      - url: `v1/product/:id`
     - response: {
       data:{product}
       }
@@ -45,9 +46,107 @@ Server run on http://localhost:4000
   - Login:
     - request:
       - method: POST
-      - url: "/v1/users/current/login"
+      - url: `/v1/users/current/login`
       - body: {
-        "email": "admin@gmail.com",
-        "password": "Ledangquang109"
+        "email": String,
+        "password": String
         }
-      - response: {data: {token: "string"}}
+      - response: {data: {token: String}}
+  - Register:
+    - note: if admin_key is true with key on server account will be create as admin
+    - request:
+      - method: POST
+      - url: `/v1/users/current`
+      - body: {
+        "first_name": String,
+        "last_name": String,
+        "phone_number": String,
+        "email": String,
+        "password": String,
+        "avatar_img": String,
+        "admin_key": String
+        }
+  - Get user data:
+    - note: require beaer token in header
+    - request:
+      - method: GET
+      - url: `/v1/users/current`
+    - response: { data: {
+      "id": String,
+      "email": String,
+      "role": String,
+      "first_name": String,
+      "last_name": String,
+      "phone_number": String,
+      "avatar_img": String
+      }}
+  - Update user data:
+    - note: require beaer token in header
+    - request:
+      - method: PUT
+      - url: `/v1/users/current`
+      - body: {
+        "first_name": String,
+        "last_name": String,
+        "phone_number": String,
+        "admin_key": String
+        }
+  - Logout:
+    - note: require beaer token in header
+    - request:
+      - method: DELETE
+      - url: `/v1/users/current/logout`
+    - response: {message: "Logout success"}
+  - Logout all device:
+    - note: require beaer token in header
+    - request:
+      - method: DELETE
+      - url: `/v1/users/current/logoutAll`
+    - response: {message: "Logout all device success"}
+  - Get user cart:
+    - note: require beaer token in header
+    - request:
+      - method: Get
+      - url: `/v1/cart`
+    - response: {
+      "data": {
+      "id": String,
+      "grand_total": Number,
+      "items_total": Number,
+      "discount_amount": Number,
+      "products": [{
+      product: {},
+      size_id: String,
+      quantity: Number,
+      selected: Boolean,
+      size: {},
+      id: String
+      }]
+      }
+      }
+  - Post item cart:
+    - note: require beaer token in header
+    - request:
+      - method: POST
+      - url: `/v1/cart`
+      - body: {
+        "productId": String,
+        "sizeId": String,
+        "quantity": Number
+        }
+    - response: {
+      "data": {
+      "id": String,
+      "grand_total": Number,
+      "items_total": Number,
+      "discount_amount": Number,
+      "products": [{
+      product: {},
+      size_id: String,
+      quantity: Number,
+      selected: Boolean,
+      size: {},
+      id: String
+      }]
+      }
+      }
