@@ -200,7 +200,7 @@ Server run on http://localhost:4000
       ]
       "userId" :String
       "id" : String}}
-- Get user order history:
+  - Get user order history:
   - note: require beaer token in header
   - request:
     - method: POST
@@ -215,3 +215,174 @@ Server run on http://localhost:4000
     "current_page": Number,
     "per_page": Number,
     "total_pages": Number}}
+- Admin API
+  - Add product:
+    - note: require beaer token in header
+    - request:
+      - method: POST
+      - url: `/v1/users/current/product`
+      - body: {
+        "name": String,
+        "description": String,
+        "size": [
+        {
+        "name": String,
+        "price": Number,
+        "original_price": Number,
+        "stock": Number,
+        "product_img": String
+        }
+        ]
+        }
+    - response: {
+      "message": "Add product success",
+      "data": {
+      "name": String,
+      "description": String,
+      "min_price": Number,
+      "max_price": Number,
+      "rating": Number,
+      "stock": Number,
+      "id": String,
+      "size": [
+      {
+      "id": "String,
+      "name": String,
+      "price": Number,
+      "original_price": Number,
+      "stock": Number,
+      "product_img": String
+      }
+      ]
+      }
+      }
+  - Update product:
+    - note: require beaer token in header
+    - request:
+      - method: PUT
+      - url: `/v1/users/current/product/:productId`
+      - body: {
+        "name": String,
+        "description": String,
+        "size": []
+        }
+    - response: {
+      "message": String,
+      "data": {
+      "name": String,
+      "description": String,
+      "min_price": Number,
+      "max_price": Number,
+      "rating": Number,
+      "stock": Number,
+      "id": String,
+      "size": []
+      }
+      }
+  - Delete product:
+    - note: require beaer token in header
+      - request:
+        - method: Delete
+        - url: `/v1/users/current/product/:productId`
+      - response: {
+        "message": "Delete product success"
+        }
+  - Add product size:
+    - note: require beaer token in header
+    - request:
+      - method: Delete
+      - url: `/v1/users/current/product/size`
+      - body: {
+        "productId": String,
+        "sizeData": {
+        "name": String,
+        "price": Number,
+        "original_price": Number,
+        "stock": Number,
+        "product_img": String
+        }
+        }
+    - response: {
+      "message": String,
+      "data": {
+      "name": String,
+      "description": String,
+      "min_price": Number,
+      "max_price": Number,
+      "rating": Number,
+      "stock": Number,
+      "id": String,
+      "size": [
+      {
+      "id": String,
+      "name": String,
+      "price": Number,
+      "original_price": Number,
+      "stock": Number,
+      "product_img": String
+      },
+      {
+      "id": String,
+      "name": String,
+      "price": Number,
+      "original_price": Number,
+      "stock": Number,
+      "product_img": String
+      }
+      ]
+      }
+      }
+  - Update product size:
+    - note: require beaer token in header
+    - request:
+      - method: PUT
+      - url: `/v1/users/current/product/size/:sizeId`
+      - body: {
+        "productId": String,
+        "sizeData": {
+        "name": String,
+        "price": Number,
+        "original_price": Number,
+        "stock": Number,
+        "product_img": String
+        }
+        }
+    - response: {
+      "message": String,
+      "data": {
+      "name": String,
+      "description": String,
+      "min_price": Number,
+      "max_price": Number,
+      "rating": Number,
+      "stock": Number,
+      "id": String,
+      "size": [
+      {
+      "id": String,
+      "name": String,
+      "price": Number,
+      "original_price": Number,
+      "stock": Number,
+      "product_img": String
+      },
+      {
+      "id": String,
+      "name": String,
+      "price": Number,
+      "original_price": Number,
+      "stock": Number,
+      "product_img": String
+      }
+      ]
+      }
+      }
+  - Delete product size:
+    - note: require beaer token in header
+    - request:
+      - method: Delete
+      - url: `/v1/users/current/product/size/:sizeId`
+      - body: {productId: String}
+    - response: {
+      "message": "Delete product size success"
+      }
