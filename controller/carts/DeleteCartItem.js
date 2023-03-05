@@ -1,5 +1,4 @@
 const Cart = require("../../models/cart.model");
-
 const deleteCartItem = async (req, res, next) => {
   try {
     const itemId = req.params.itemId;

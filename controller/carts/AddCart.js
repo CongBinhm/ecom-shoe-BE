@@ -2,7 +2,6 @@ require("dotenv").config();
 const Cart = require("../../models/cart.model");
 const Product = require("../../models/product.model");
 const formatCartDataResponse = require("../../services/formatCartDataResponse");
-
 const addCart = async (req, res) => {
   try {
     const productId = req.body.productId;
