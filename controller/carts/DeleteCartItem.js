@@ -9,7 +9,7 @@ const DeleteCartItem = async(req, res, next) => {
             if (!error.statusCode) {
                 error.statusCode = 500;
               }
-              next(err);
+              next(error);
         }
 }
 
