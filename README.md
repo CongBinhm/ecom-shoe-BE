@@ -21,7 +21,7 @@ Server run on http://localhost:4000
       - method: GET
       - url: `v1/products`
     - response:
-      - success: {
+      - success: ```json{
         - data: {
           "items": [
           {
@@ -33,7 +33,7 @@ Server run on http://localhost:4000
           "per_page": Number,
           "total_pages": Number
           }
-          }
+          }```
   - Get product:
     - note: id is id of product
     - request:
