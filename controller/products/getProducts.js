@@ -9,11 +9,20 @@ const getProducts = async (req, res) => {
         : req.query.per_page;
     const page =
       !Boolean(req.query.page) || req.query.page < 1 ? 1 : req.query.page;
+    const sort_price = req.query.sort_price;
     const total_items = await Product.count();
-    const productList = await Product.find()
-      .populate("userId")
-      .skip(per_page * (page - 1))
-      .limit(per_page);
+    let productList;
+    if (sort_price !== undefined)
+      productList = await Product.find()
+        .populate("userId")
+        .skip(per_page * (page - 1))
+        .limit(per_page)
+        .sort({ max_price: sort_price });
+    else
+      productList = await Product.find()
+        .populate("userId")
+        .skip(per_page * (page - 1))
+        .limit(per_page);
     res.status(200).json({
       data: {
         items: productList.map((data) => formatProductDataResponse(data)),
