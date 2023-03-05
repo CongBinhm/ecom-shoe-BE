@@ -18,6 +18,7 @@ const {
   deleteProductSize,
 } = require("../controller/products");
 const { userAuth, adminAuth } = require("../middleware");
+const { getOrders } = require("../controller/orders");
 
 usersRouter.get("/current", userAuth, getUser);
 usersRouter.post("/current", register);
@@ -43,5 +44,7 @@ usersRouter.delete(
   adminAuth,
   deleteProductSize
 );
+
+usersRouter.get("/current/orders", userAuth, getOrders);
 
 module.exports = usersRouter;

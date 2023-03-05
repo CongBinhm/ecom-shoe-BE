@@ -6,11 +6,12 @@ const orderSchema = new Schema(
     grand_total: { type: Number, required: true },
     items_total: { type: Number, required: true },
     discount_amount: { type: Number, required: true },
+    payment_method: { type: String, required: true },
     products: [
       {
         product: { type: Object, required: true },
         quantity: { type: Number, required: true },
-        size_id: { type: Schema.Types.ObjectId, required: true },
+        size: { type: Object, required: true },
       },
     ],
     userId: {

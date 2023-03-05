@@ -1,22 +1,21 @@
 require("dotenv").config();
+const Cart = require("../../models/cart.model");
+const formatCartDataResponse = require("../../services/formatCartDataResponse");
 
 const GetCart = async (req, res, next) => {
-    const user = await req.user().populate('cart.products.product._id');
-    try {
-        if(!user) {
-            const error = new Error('Nothing in cart.');
-            error.statusCode = 404;
-            throw error;
-        }
-        const products = user.cart;
-        res.status(200).json({message: 'Fetch Cart successfully.', cart: products})
-    } catch (error) {
-        if (!error.statusCode) {
-            error.statusCode = 500;
-          }
-          next(error);
+  try {
+    const cart = await Cart.findOne({ _id: req.user.cart }).populate(
+      "products.product"
+    );
+    res.status(200).json({
+      data: formatCartDataResponse(cart),
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
     }
+    next(error);
+  }
+};
 
-}
-
-module.exports = GetCart
+module.exports = GetCart;
