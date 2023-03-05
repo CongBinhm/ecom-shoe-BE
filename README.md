@@ -3,8 +3,11 @@
 ## Available Scripts
 
 ### Add package
+
 #### `npm install` or `yarn add`
+
 ### .env setup
+
 - PORT
 - JWT_KEY
 - DATABASE_URL
@@ -13,6 +16,7 @@
 - adminRegisterKey
 
 ### Run project
+
 #### `npm start` or `yarn start`
 
 Runs the server in the development mode.
@@ -21,14 +25,23 @@ Server run on http://localhost:4000
 ## API description
 
 ### Get post man file [here](https://drive.google.com/file/d/1sXlqaX05n2jbCSlbuArhSHN7adda_GqE/view?usp=sharing) and remember add environment with URL variable
-### URL server deploy: https://ecom-shoe.onrender.com 
+
+### URL server deploy: https://ecom-shoe.onrender.com
+
 ### admin_key: gnauq
+
 ### Docs
+
 - Public API:
   - Get products list:
     - request:
       - method: GET
       - url: `v1/products`
+      - params: {
+        per_page: Number,
+        page: Number,
+        sort_price: Number
+        }
     - response:
       - success: {
         - data: {
