@@ -1,34 +1,30 @@
-const User = require("../../models/user.model");
 const formatCartDataResponse = require("../../services/formatCartDataResponse");
+const Cart = require("../../models/cart.model");
 
 const updateCart = async (req, res, next) => {
-    try {
-        const userId = req.user._id;
-        const productId = req.params.id;
-        const sizeId = req.params.sizeId;
-        const {quantity} = req.body.cart.products;
-        const newValue = {};
-        if(Boolean(quantity)) newValue["cart.products.$.quantity"] = quantity;
-        const updateValue = await User.findOneAndUpdate({
-            userId: userId,
-            "cart.products.product": productId,
-            "cart.products.size_id": sizeId
-        },
-        {
-            $set: newValue
-        },
-        {new: true}
-        );
-        res.status(200).json({
-            message: "Updated cart successfully",
-            data: formatCartDataResponse(updateValue)
-        })
-    } catch(error) {
-        if (!error.statusCode) {
-            error.statusCode = 500;
-          }
-          next(error);
-    }
-}
+  try {
+    const { quantity, selected } = req.body;
+    const cartIdUpdate = req.params.cartId;
+    const cart = await Cart.findOne({ _id: req.user.cart }).populate(
+      "products.product"
+    );
+    const indexUpdate = cart.products.findIndex(
+      (ele) => ele._id.toString() === cartIdUpdate
+    );
+    if (indexUpdate === -1)
+      return res
+        .status(404)
+        .json({ message: "Can't find order id for update" });
+    if (quantity) cart.products[indexUpdate].quantity = quantity;
+    if (selected !== undefined) cart.products[indexUpdate].selected = selected;
+    await cart.save();
+    res.status(200).json({
+      message: "Updated cart successfully",
+      data: formatCartDataResponse(cart),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = updateCart;

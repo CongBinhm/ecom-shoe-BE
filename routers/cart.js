@@ -13,6 +13,6 @@ const { userAuth } = require("../middleware");
 CartRouter.get("/", userAuth, getCart);
 CartRouter.post("/", userAuth, addCart);
 CartRouter.delete("/", userAuth, DeleteCartItem);
-CartRouter.put("/", userAuth, updateCart);
+CartRouter.put("/:cartId", userAuth, updateCart);
 
 module.exports = CartRouter;

@@ -6,7 +6,7 @@ const formatCartDataResponse = require("../../services/formatCartDataResponse");
 const addCart = async (req, res) => {
   try {
     const productId = req.body.productId;
-    const findProduct = await Product.findOne({ _id: productId });
+    await Product.findOne({ _id: productId });
     const sizeId = req.body.sizeId;
     const quantity = req.body.quantity || 1;
     const selected = req.body.selected || true;
