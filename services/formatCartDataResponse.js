@@ -3,20 +3,18 @@ const formatProductDataResponse = require("./formatProductDataResponse");
 const formatCartDataResponse = (cart) => {
   let items_total = 0;
   let formatData = {
-    id: cart.id,
+    id: cart._id,
     grand_total: cart.grand_total,
     items_total: cart.items_total,
     discount_amount: cart.discount_amount,
     products: cart.products.map((data) => ({
-      id: data.id,
-
+      id: data._id,
       quantity: data.quantity,
       size_id: data.size_id,
       selected: data.selected,
       product: formatProductDataResponse(data.product, 0),
     })),
   };
-  console.log(formatData.products);
   formatData.products = formatData.products.map((data) => {
     data.size = data.product.size.find(
       (ele) => ele.id.toString() === data.size_id.toString()

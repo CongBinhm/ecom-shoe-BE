@@ -2,16 +2,16 @@ const express = require("express");
 const CartRouter = express.Router();
 
 const {
-  AddCart,
-  GetCart,
+  addCart,
+  getCart,
   DeleteCartItem,
   updateCart,
 } = require("../controller/carts");
 
 const { userAuth } = require("../middleware");
 
-CartRouter.get("/", userAuth, GetCart);
-CartRouter.post("/", userAuth, AddCart);
+CartRouter.get("/", userAuth, getCart);
+CartRouter.post("/", userAuth, addCart);
 CartRouter.delete("/", userAuth, DeleteCartItem);
 CartRouter.put("/", userAuth, updateCart);
 

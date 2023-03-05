@@ -8,10 +8,14 @@ const CartSchema = new Schema(
     discount_amount: { type: Number, required: true },
     products: [
       {
-        product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
         quantity: { type: Number, required: true },
         size_id: { type: Schema.Types.ObjectId, required: true },
-        selected: {type: Boolean}
+        selected: { type: Boolean },
       },
     ],
   },

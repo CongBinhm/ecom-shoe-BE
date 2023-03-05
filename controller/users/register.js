@@ -22,9 +22,10 @@ const register = async (req, res) => {
       grand_total: 0,
       items_total: 0,
       discount_amount: 0,
-      products: []
-    })
+      products: [],
+    });
     await cart.save();
+    console.log(admin_key === adminRegisterKey ? "admin" : "user");
     const user = new User({
       email,
       first_name,
@@ -33,7 +34,7 @@ const register = async (req, res) => {
       password: password,
       avatar_img,
       role: admin_key === adminRegisterKey ? "admin" : "user",
-      cart: cart._id
+      cart: cart._id,
     });
     await user.save();
     res.status(201).json({

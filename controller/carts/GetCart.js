@@ -8,7 +8,6 @@ const GetCart = async (req, res, next) => {
       "products.product"
     );
     res.status(200).json({
-      message: "Fetch Cart successfully.",
       data: formatCartDataResponse(cart),
     });
   } catch (error) {
