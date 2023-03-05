@@ -9,22 +9,25 @@ const formatCartDataResponse = (cart) => {
     discount_amount: cart.discount_amount,
     products: cart.products.map((data) => ({
       id: data.id,
+
       quantity: data.quantity,
       size_id: data.size_id,
       selected: data.selected,
       product: formatProductDataResponse(data.product, 0),
     })),
   };
+  console.log(formatData.products);
   formatData.products = formatData.products.map((data) => {
-    data.size = data.product.size.find((ele) => ele.id === data.size_id);
+    data.size = data.product.size.find(
+      (ele) => ele.id.toString() === data.size_id.toString()
+    );
+    console.log(data.size);
     items_total += data.size.price * data.quantity;
     return data;
   });
   formatData.items_total = items_total;
   formatData.grand_total = items_total - formatData.discount_amount;
   return formatData;
-
-  return data;
 };
 
 module.exports = formatCartDataResponse;
